@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
     libxrender1 \
     xfonts-75dpi \
     xfonts-base \
-    netcat-openbsd 
+    netcat-openbsd
 
 # Limpiar caché
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -70,14 +70,29 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user \
     && mkdir -p /home/$user/.composer \
     && chown -R $user:$user /home/$user
 
-# Copiar script de inicio COMO ROOT
+# Directorio de trabajo
+WORKDIR /var/www
+
+# Copiar el directorio www que contiene el proyecto y composer.json
+COPY www /var/www
+
+# Cambiar la propiedad de TODO el directorio /var/www al usuario DESPUÉS de copiar el código
+RUN chown -R $user:$user /var/www
+
+# Antes de USER $user
+RUN chmod -R 775 /var/www/writable \
+    && chown -R www-data:www-data /var/www/writable
+
+# Cambiar al usuario para las siguientes operaciones
+USER $user
+
+# Instalar dependencias de Composer (incluyendo guzzle)
+RUN composer install --no-interaction --optimize-autoloader
+
+# Copiar script de inicio COMO ROOT (se ejecuta como root)
 USER root
 COPY docker-compose/scripts/start.sh /start.sh
 RUN chmod +x /start.sh
-
-# Directorio de trabajo y usuario final
-WORKDIR /var/www
-USER $user
 
 # Comando de inicio
 CMD ["/start.sh"]

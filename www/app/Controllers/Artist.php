@@ -3,7 +3,7 @@
 use CodeIgniter\Controller;
 use GuzzleHttp\Client;
 
-class Album extends Controller {
+class Artist extends Controller {
     public function show($id) {
         // if (!session()->get('isLoggedIn')) return redirect()->to('/');
 
@@ -16,6 +16,6 @@ class Album extends Controller {
         // ]);
         // $data = json_decode($response->getBody(), true)['results'][0];
 
-        echo view('album');
+        echo view('artist');
     }
 }

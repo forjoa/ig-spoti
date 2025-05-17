@@ -45,15 +45,15 @@
                 <?php } else { ?>
                     <?php foreach ($playlists as $playlist): ?>
                         <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                            <a href="<?= base_url('my-playlists/' . $playlist->id) ?>">
-                                <img src="<?= $playlist->cover ?? base_url('assets/img/default_playlist.jpg') ?>"
-                                    alt="<?= $playlist->name ?>" class="w-full h-48 object-cover">
+                            <a href="<?= base_url('my-playlists/' . $playlist['id']) ?>">
+                                <img src="<?= $playlist['cover'] == '' ? base_url('unknown-music.jpg') : base_url('uploads/'.$playlist['cover']) ?>"
+                                    alt="<?= $playlist['name'] ?>" class="w-full h-48 object-cover">
                             </a>
                             <div class="p-4">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <h3 class="font-bold text-lg mb-1"><?= $playlist->name ?></h3>
-                                        <p class="text-gray-600 text-sm"><?= $playlist->track_count ?> canciones</p>
+                                        <h3 class="font-bold text-lg mb-1"><?= $playlist['name'] ?></h3>
+                                        <p class="text-gray-600 text-sm"><?= $playlist['track_count'] ?? 'Muchas' ?> canciones</p>
                                     </div>
                                     <button class="bg-indigo-600 rounded-full p-2 text-white hover:bg-indigo-700 transition">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"

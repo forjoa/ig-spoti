@@ -44,10 +44,12 @@ $routes->get('/playlist/(:num)', [Playlist::class, 'show']);
 // Mis Playlists
 $routes->get('/my-playlists', [MyPlaylists::class, 'index']);
 $routes->get('/my-playlists/(:num)', [MyPlaylists::class, 'show']);
-$routes->get('/create-playlist', [MyPlaylists::class, 'create']);
+
+$routes->get('/create-playlist', [MyPlaylists::class, 'createView']);
 $routes->post('/create-playlist', [MyPlaylists::class, 'create']);
+
 $routes->put('/my-playlists/(:num)', [MyPlaylists::class, 'update']);
-$routes->delete('/my-playlists/(:num)', [MyPlaylists::class, 'delete']);
+$routes->post('/my-playlists/(:num)', [MyPlaylists::class, 'delete']);
 $routes->put('/my-playlists/(:num)/track/(:num)', [MyPlaylists::class, 'addTrack']);
 $routes->delete('/my-playlists/(:num)/track/(:num)', [MyPlaylists::class, 'removeTrack']);
 // });

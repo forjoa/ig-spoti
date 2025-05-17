@@ -32,7 +32,7 @@
                         <div class="mb-6">
                             <label for="playlist_name" class="block text-gray-700 font-medium mb-2">Nombre de la
                                 Playlist *</label>
-                            <input type="text" id="playlist_name" name="playlist_name" required
+                            <input type="text" id="playlist_name" name="name" required
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 placeholder="Mi nueva playlist">
                         </div>
@@ -54,7 +54,7 @@
                                                 subir</p>
                                         <p class="text-xs text-gray-500">SVG, PNG, JPG o GIF (Máx. 2MB)</p>
                                     </div>
-                                    <input id="playlist_cover" name="playlist_cover" type="file" class="hidden"
+                                    <input id="playlist_cover" name="cover" type="file" class="hidden"
                                         accept="image/*" />
                                 </label>
                             </div>

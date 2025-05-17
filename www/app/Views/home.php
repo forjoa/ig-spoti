@@ -12,7 +12,7 @@
     <div class="min-h-screen flex flex-col">
         <header class="bg-indigo-600 text-white p-4">
             <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-                <h1 class="text-3xl font-bold mb-4 md:mb-0">Music App</h1>
+                <a href="<?= base_url('home') ?>" class="text-3xl font-bold mb-4 md:mb-0">Music App</a>
 
                 <div class="flex items-center space-x-6">
                     <a href="<?= base_url('my-playlists') ?>" class="hover:text-indigo-200">Mis Playlists</a>
@@ -83,19 +83,18 @@
                             <?php elseif ($type === 'album'): ?>
                                 <a href="<?= base_url('album/' . $result->id) ?>"
                                     class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
-                                    <img src="<?= $result->image ?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
+                                    <img src="<?= $result->image == '' ? base_url('unknown-music.jpg') :  $result->image?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
                                     <div class="p-4">
                                         <h3 class="font-bold text-lg mb-1"><?= $result->name ?></h3>
                                         <p class="text-gray-600">
-                                            <a href="<?= base_url('artist/' . $result->artist_id) ?>"
-                                                class="hover:underline"><?= $result->artist_name ?></a>
+                                            <?= $result->artist_name ?>
                                         </p>
                                     </div>
                                 </a>
                             <?php elseif ($type === 'artist'): ?>
                                 <a href="<?= base_url('artist/' . $result->id) ?>"
                                     class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
-                                    <img src="<?= $result->image ?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
+                                    <img src="<?= $result->image == '' ? base_url('unknown-artist.png') : $result->image ?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
                                     <div class="p-4">
                                         <h3 class="font-bold text-lg"><?= $result->name ?></h3>
                                     </div>
@@ -103,10 +102,10 @@
                             <?php elseif ($type === 'playlist'): ?>
                                 <a href="<?= base_url('playlist/' . $result->id) ?>"
                                     class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
-                                    <img src="<?= $result->image ?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
+                                    <img src="<?= base_url('unknown-music.jpg') ?>" alt="<?= $result->name ?>" class="w-full h-48 object-cover">
                                     <div class="p-4">
                                         <h3 class="font-bold text-lg mb-1"><?= $result->name ?></h3>
-                                        <p class="text-gray-600"><?= $result->tracks_count ?> canciones</p>
+                                        <p class="text-gray-600"><?= $result->tracks_count ?? 'Muchas' ?> canciones</p>
                                     </div>
                                 </a>
                             <?php endif; ?>
@@ -127,11 +126,11 @@
                             <?php foreach ($popular_playlists as $playlist): ?>
                                 <a href="<?= base_url('playlist/' . $playlist->id) ?>"
                                     class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
-                                    <img src="<?= $playlist->image ?>" alt="<?= $playlist->name ?>"
-                                        class="w-full h-48 object-cover">
+                                    
+                                        <img src="<?= $playlist->image ?? base_url('unknown-music.jpg') ?>" alt="<?= $playlist->name ?>" class="w-full h-48 object-cover">
                                     <div class="p-4">
                                         <h4 class="font-bold text-lg mb-1"><?= $playlist->name ?></h4>
-                                        <p class="text-gray-600"><?= $playlist->tracks_count ?> canciones</p>
+                                        <p class="text-gray-600"><?= $playlist->tracks_count ?? 'Muchas' ?> canciones</p>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
@@ -148,7 +147,7 @@
                             <?php foreach ($featured_artists as $artist): ?>
                                 <a href="<?= base_url('artist/' . $artist->id) ?>" class="text-center">
                                     <div class="w-32 h-32 mx-auto rounded-full overflow-hidden mb-2">
-                                        <img src="<?= $artist->image ?>" alt="<?= $artist->name ?>"
+                                        <img src="<?= $artist->image == '' ? base_url('unknown-artist.png') : $artist->image ?>" alt="<?= $artist->name ?>"
                                             class="w-full h-full object-cover">
                                     </div>
                                     <h4 class="font-medium"><?= $artist->name ?></h4>
@@ -165,18 +164,15 @@
                             <p class="text-gray-500">No hay álbumes recientes en este momento.</p>
                         <?php } else { ?>
                             <?php foreach ($recent_albums as $album): ?>
-                                <a href="<?= base_url('album/' . $album->id) ?>"
-                                    class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
-                                    <img src="<?= $album->image ?>" alt="<?= $album->name ?>" class="w-full h-48 object-cover">
-                                    <div class="p-4">
-                                        <h4 class="font-bold text-lg mb-1"><?= $album->name ?></h4>
-                                        <p class="text-gray-600">
-                                            <a href="<?= base_url('artist/' . $album->artist_id) ?>"
-                                                class="hover:underline"><?= $album->artist_name ?></a>
-                                        </p>
+                                <a href="<?= base_url('album/' . $album->id) ?>" class="bg-white rounded-lg shadow overflow-hidden block hover:shadow-lg transition">
+                                    <img src="<?= $album->image ?>" alt="<?= $album->name ?>" class="w-full h-48 object-cover" />
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-1 px-6 py-4"><?= $album->name ?></h4>
+                                        <p class="text-gray-600 px-6 pb-4"><?= $album->artist_name ?></p>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
+
                         <?php } ?>
                     </div>
                 </div>

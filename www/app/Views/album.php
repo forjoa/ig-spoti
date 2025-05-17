@@ -27,24 +27,22 @@
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div class="md:flex">
                     <div class="md:w-1/3 bg-gray-900">
-                        <img src="<?= $album->cover ?? base_url('assets/img/default_album.jpg') ?>"
-                            alt="<?= $album->name ?? '' ?>" class="w-full h-auto object-cover">
+                        <img src="<?= $album['image'] ?? base_url('unknown-music.jpg') ?>"
+                            alt="<?= $album['name'] ?? '' ?>" class="w-full h-auto object-cover">
                     </div>
                     <div class="p-6 md:w-2/3">
-                        <h2 class="text-3xl font-bold mb-2"><?= $album->name ?? '' ?></h2>
+                        <h2 class="text-3xl font-bold mb-2"><?= $album['name'] ?? '' ?></h2>
                         <p class="text-lg mb-4">
-                            <a href="<?php if (isset($album))
-                                base_url('artist/' . $album->artist_id ?? '') ?>"
-                                    class="text-indigo-600 hover:underline"><?= $album->artist_name ?? '' ?></a>
+                            <a href="<?php base_url('artist/' . $album['artist_id']) ?>"
+                                    class="text-indigo-600 hover:underline"><?= $album['artist_name'] ?? '' ?></a>
                         </p>
                         <p class="text-gray-600 mb-6">Publicado el
-                            <?= date('d/m/Y', strtotime($album->release_date ?? 10)) ?>
+                            <?= date('d/m/Y', strtotime($album['releasedate'] ?? 10)) ?>
                         </p>
 
                         <div class="bg-gray-50 p-4 rounded mb-6">
                             <div class="flex justify-between items-center mb-4">
                                 <h3 class="text-xl font-semibold">Canciones</h3>
-                                <p class="text-gray-500">Duración total: <?= $album->total_duration ?? '0' ?></p>
                             </div>
 
                             <div class="divide-y">
@@ -57,10 +55,10 @@
                                         <div class="flex items-center py-3 px-2 hover:bg-gray-100 group">
                                             <div class="w-8 text-center text-gray-500"><?= $index + 1 ?></div>
                                             <div class="flex-grow px-4">
-                                                <p class="font-medium"><?= $track->name ?></p>
-                                                <p class="text-sm text-gray-500"><?= $track->artist_name ?></p>
+                                                <p class="font-medium"><?= $track['name'] ?></p>
+                                                <p class="text-sm text-gray-500"><?= $album['artist_name'] ?></p>
                                             </div>
-                                            <div class="text-gray-500"><?= $track->duration ?></div>
+                                            <div class="text-gray-500"><?= gmdate("i:s",$track['duration']) ?></div>
                                             <div class="ml-4 opacity-0 group-hover:opacity-100 transition">
                                                 <button class="text-indigo-600 hover:text-indigo-800">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"

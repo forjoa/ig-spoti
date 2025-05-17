@@ -27,13 +27,15 @@
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div class="md:flex">
                     <div class="md:w-1/3">
-                        <img src="<?= $artist->profile_picture ?? base_url('assets/img/default_artist.jpg') ?>"
-                            alt="<?= $artist->name ?? '' ?>" class="w-full h-auto object-cover">
+                        <img src="<?= $artist['image'] == '' ? base_url('unknown-artist.png') : $artist['image'] ?>"
+                            alt="<?= $artist['name'] ?? '' ?>"
+                            class="w-full h-auto object-cover pl-4 pt-4 pr-4 rounded-md">
                     </div>
                     <div class="p-6 md:w-2/3">
-                        <h2 class="text-3xl font-bold mb-2"><?= $artist->name ?? '' ?></h2>
+                        <h2 class="text-3xl font-bold mb-2"><?= $artist['name'] ?? '' ?></h2>
                         <p class="text-gray-600 mb-4">Se unió el
-                            <?= date('d/m/Y', strtotime($artist->join_date ?? 10)) ?></p>
+                            <?= date('d/m/Y', strtotime($artist['joindate'] ?? 10)) ?>
+                        </p>
 
                         <h3 class="text-xl font-semibold mb-4 mt-6 border-b pb-2">Álbumes</h3>
                         <?php if (!isset($albums)) { ?>
@@ -43,15 +45,16 @@
                         <?php } else { ?>
                             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                                 <?php foreach ($albums as $album): ?>
-                                    <a href="<?= base_url('album/' . $album->id) ?>" class="group">
+                                    <a href="<?= base_url('album/' . $album['id']) ?>" class="group">
                                         <div
                                             class="bg-gray-100 rounded overflow-hidden shadow transition transform group-hover:scale-105">
-                                            <img src="<?= $album->cover ?? base_url('assets/img/default_album.jpg') ?>"
-                                                alt="<?= $album->name ?>" class="w-full h-40 object-cover">
+                                            <img src="<?= !$album['image'] || $album['image'] == '' ? base_url('unknown-music.jpg') : $album['image'] ?>"
+                                                alt="<?= $album['name'] ?>" class="w-full h-40 object-cover">
                                             <div class="p-3">
-                                                <h4 class="font-semibold truncate"><?= $album->name ?></h4>
+                                                <h4 class="font-semibold truncate"><?= $album['name'] ?></h4>
                                                 <p class="text-sm text-gray-500">
-                                                    <?= date('Y', strtotime($album->release_date)) ?></p>
+                                                    <?= date('Y', strtotime($album['releasedate'])) ?>
+                                                </p>
                                             </div>
                                         </div>
                                     </a>

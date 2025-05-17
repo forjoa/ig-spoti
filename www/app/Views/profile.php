@@ -29,13 +29,13 @@
 
                 <div class="mb-6 flex flex-col sm:flex-row items-center">
                     <div class="w-32 h-32 rounded-full overflow-hidden mb-4 sm:mb-0 sm:mr-6">
-                        <img src="<?= isset($user->profile_picture) ? $user->profile_picture : '' ?>" alt="Foto de perfil"
+                        <img src="<?= $user['profile_pic'] != '' ? base_url('uploads/'.$user['profile_pic']) : base_url('unknown-artist.png') ?>" alt="Foto de perfil"
                             class="w-full h-full object-cover">
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-bold"><?= isset($user->username) ? $user->username : '' ?></h3>
-                        <p class="text-gray-600"><?= isset($user->email) ? $user->email : '' ?></p>
+                        <h3 class="text-xl font-bold"><?= isset($user['username']) ? $user['username'] : '' ?></h3>
+                        <p class="text-gray-600"><?= isset($user['email']) ? $user['email'] : '' ?></p>
                     </div>
                 </div>
 
@@ -45,10 +45,10 @@
                     </div>
                 <?php endif; ?>
 
-                <form action="<?= base_url('profile') ?>" method="POST" enctype="multipart/form-data">
+                <form action="<?= base_url('profile/update') ?>" method="POST" enctype="multipart/form-data">
                     <div class="mb-4">
                         <label for="username" class="block text-gray-700 mb-2">Nombre de usuario</label>
-                        <input type="text" id="username" name="username" value="<?= isset($user->username) ? $user->username : '' ?>"
+                        <input type="text" id="username" name="username" value="<?= isset($user['username']) ? $user['username'] : '' ?>"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         <?php if (isset($username_error)): ?>
                             <p class="text-red-500 text-sm mt-1"><?= $username_error ?></p>
@@ -58,13 +58,13 @@
                     <div class="mb-4">
                         <label for="email" class="block text-gray-700 mb-2">Correo electrónico (no se puede
                             cambiar)</label>
-                        <input type="email" id="email" value="<?= isset($user->email) ? $user->email : '' ?>" disabled
+                        <input type="email" id="email" value="<?= isset($user['email']) ? $user['email'] : '' ?>" disabled
                             class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100">
                     </div>
 
                     <div class="mb-4">
                         <label for="age" class="block text-gray-700 mb-2">Edad</label>
-                        <input type="number" id="age" name="age" value="<?= isset($user->age) ? $user->age : '' ?>"
+                        <input type="number" id="age" name="age" value="<?= isset($user['age']) ? $user['age'] : '' ?>"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         <?php if (isset($age_error)): ?>
                             <p class="text-red-500 text-sm mt-1"><?= $age_error ?></p>
@@ -130,7 +130,6 @@
         </footer>
     </div>
 
-    <!-- Modal de confirmación para eliminar cuenta -->
     <div id="delete-account-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
         <div class="bg-white rounded-lg p-6 max-w-md w-full">
             <h3 class="text-xl font-bold mb-4">¿Estás seguro?</h3>
@@ -145,6 +144,7 @@
                 </button>
 
                 <form action="<?= base_url('profile/delete') ?>" method="POST">
+                    <input type="hidden" name="user_id" value="<?= isset($user['id']) ? $user['id'] : '' ?>">
                     <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
                         Eliminar mi cuenta
                     </button>

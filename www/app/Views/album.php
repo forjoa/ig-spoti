@@ -26,14 +26,14 @@
         <main class="flex-grow container mx-auto py-8 px-4">
             <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <div class="md:flex">
-                    <div class="md:w-1/3 bg-gray-900">
+                    <div class="md:w-1/3">
                         <img src="<?= $album['image'] ?? base_url('unknown-music.jpg') ?>"
                             alt="<?= $album['name'] ?? '' ?>" class="w-full h-auto object-cover">
                     </div>
                     <div class="p-6 md:w-2/3">
                         <h2 class="text-3xl font-bold mb-2"><?= $album['name'] ?? '' ?></h2>
                         <p class="text-lg mb-4">
-                            <a href="<?php base_url('artist/' . $album['artist_id']) ?>"
+                            <a href="<?= base_url('artist/' . $album['artist_id']) ?>"
                                     class="text-indigo-600 hover:underline"><?= $album['artist_name'] ?? '' ?></a>
                         </p>
                         <p class="text-gray-600 mb-6">Publicado el

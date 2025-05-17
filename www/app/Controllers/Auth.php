@@ -55,11 +55,18 @@ class Auth extends Controller
             return redirect()->back()->withInput()->with('error', 'Validación incorrecta.');
         }
 
+        $cover = $this->request->getFile('profile_picture');
+        $coverName = '';
+
+        if ($cover && $cover->isValid() && !$cover->hasMoved()) {
+            $coverName = $cover->getRandomName();
+            $cover->move(FCPATH . 'uploads', $coverName);
+        }
+
         // Procesar datos
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
         $username = $this->request->getPost('username') ?? explode('@', $email)[0];
-        $profile_picture = $this->request->getPost('profile_picture') ?? 'default.png';
 
         $password_hashed = password_hash(trim($password), PASSWORD_DEFAULT, ['cost' => 10]);
 
@@ -70,7 +77,7 @@ class Auth extends Controller
                 'email' => $email,
                 'password' => $password_hashed,
                 'username' => $username,
-                'profile_picture' => $profile_picture,
+                'profile_pic' => $coverName,
             ]);
 
             return redirect()->to('/sign-in')->with('success', '¡Registro exitoso!');

@@ -21,8 +21,8 @@ class Playlist extends Controller {
                 'id' => $playlistId
             ]
         ]);
-        $data['playlist'] = json_decode($response->getBody(), true)['results'][0];
-        $data['tracks'] = $data['playlist']['tracks'];
+        $data['playlist'] = json_decode($response->getBody(), true)['results'] ? json_decode($response->getBody(), true)['results'][0] : null;
+        $data['tracks'] =  $data['playlist'] ? $data['playlist']['tracks'] : null;
 
         // $data = [
         //     'title' => $playlist['name'],

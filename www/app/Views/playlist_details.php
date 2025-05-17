@@ -34,7 +34,7 @@
                         <div class="flex justify-between items-start mb-6">
                             <div>
                                 <h2 class="text-3xl font-bold mb-2"><?= $playlist['name'] ?? '' ?></h2>
-                                <p class="text-gray-600"><?= count($tracks) ?> canciones
+                                <p class="text-gray-600"><?= count($tracks ?? []) ?> canciones
                                 </p>
                             </div>
                             <button id="savePlaylist"

@@ -12,6 +12,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+$routes->setAutoRoute(false); // o true si deseas habilitar el auto-ruteo
 
 // Landing Page (usa el método index de Home para usuarios no logueados)
 $routes->get('/', [Home::class, 'index']);

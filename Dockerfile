@@ -88,11 +88,3 @@ USER $user
 
 # Instalar dependencias de Composer (incluyendo guzzle)
 RUN composer install --no-interaction --optimize-autoloader
-
-# Copiar script de inicio COMO ROOT (se ejecuta como root)
-USER root
-COPY docker-compose/scripts/start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Comando de inicio
-CMD ["/start.sh"]

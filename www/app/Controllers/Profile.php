@@ -31,14 +31,12 @@ class Profile extends Controller
         $request = $this->request;
         $validation = \Config\Services::validation();
 
-        // Validar campos básicos
         $rules = [
             'username' => 'required|min_length[3]|max_length[50]',
             'age' => 'permit_empty|integer|greater_than_equal_to[0]',
             'profile_picture' => 'is_image[profile_picture]|max_size[profile_picture,2048]',
         ];
 
-        // Si el usuario quiere cambiar la contraseña, validamos los campos
         $newPassword = $request->getPost('new_password');
         if (!empty($newPassword)) {
             $rules['current_password'] = 'required';
@@ -58,11 +56,9 @@ class Profile extends Controller
             ]);
         }
 
-        // Actualizar datos básicos
         $user['username'] = $request->getPost('username');
         $user['age'] = $request->getPost('age');
 
-        // Manejar imagen de perfil si se subió
         $profilePicture = $request->getFile('profile_picture');
         if ($profilePicture && $profilePicture->isValid() && !$profilePicture->hasMoved()) {
             $newName = $profilePicture->getRandomName();
@@ -70,7 +66,6 @@ class Profile extends Controller
             $user['profile_pic'] = $newName;
         }
 
-        // Cambiar contraseña si se solicitó
         if (!empty($newPassword)) {
             if (!password_verify($request->getPost('current_password'), $user['password'])) {
                 return view('profile', [
@@ -82,7 +77,6 @@ class Profile extends Controller
             $user['password'] = password_hash($newPassword, PASSWORD_DEFAULT);
         }
 
-        // Guardar cambios
         $userModel->save($user);
 
         return view('profile', [
@@ -94,8 +88,6 @@ class Profile extends Controller
 
     public function delete()
     {
-
-        // Handle user deletion
         $model = new UserModel();
         $userId = session()->get('user_id');
 

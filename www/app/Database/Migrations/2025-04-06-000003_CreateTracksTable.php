@@ -10,8 +10,10 @@ class CreateTracksTable extends Migration
     {
         $this->forge->addField([
             'id'          => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+                'auto_increment' => true,
             ],
             'name'        => [
                 'type'       => 'VARCHAR',
@@ -60,7 +62,7 @@ class CreateTracksTable extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('playlist_id', 'playlists', 'id', 'CASCADE', 'CASCADE');
+        // $this->forge->addForeignKey('playlist_id', 'playlists', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('tracks');
     }
 

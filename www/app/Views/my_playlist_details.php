@@ -50,19 +50,35 @@
                 <h3 class="text-xl font-semibold mb-4">Canciones</h3>
                 <?php if (!empty($tracks)): ?>
                     <ul class="divide-y divide-gray-200">
-                        <?php foreach ($tracks as $track): ?>
-                            <li class="py-4 flex items-center justify-between">
-                                <div>
-                                    <p class="text-gray-800 font-medium"><?= esc($track['title']) ?></p>
+                        <?php foreach ($tracks as $index => $track): ?>
+                            <div class="flex items-center py-3 px-2 hover:bg-gray-100 group">
+                                <div class="w-8 text-center text-gray-500"><?= $index + 1 ?></div>
+                                <div class="flex-grow px-4">
+                                    <p class="font-medium"><?= esc($track['name']) ?></p>
                                     <p class="text-sm text-gray-500"><?= esc($track['artist_name']) ?></p>
                                 </div>
-                                <form action="<?= base_url('my-playlists/' . $playlist['id'] . '/track/' . $track['id']) ?>"
-                                    method="post" onsubmit="return confirm('¿Eliminar esta canción de la playlist?');">
-                                    <?= csrf_field() ?>
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="text-red-600 hover:text-red-700">Eliminar</button>
-                                </form>
-                            </li>
+                                <div class="text-gray-500"><?= gmdate("i:s", $track['duration']) ?></div>
+                                <div class="ml-4 opacity-0 group-hover:opacity-100 transition flex items-center space-x-2">
+                                    <form action="<?= base_url('my-playlists/' . $playlist['id'] . '/track') ?>"
+                                        method="post" onsubmit="return confirm('¿Eliminar esta canción de la playlist?');">
+                                        <?= csrf_field() ?>
+                                        <input type="hidden" name="track_id" value="<?= esc($track['id']) ?>">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="text-red-600 hover:text-red-700">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                    <button class="text-indigo-600 hover:text-indigo-800" type="button" aria-label="Reproducir">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
                         <?php endforeach; ?>
                     </ul>
                 <?php else: ?>
@@ -72,7 +88,7 @@
 
             <div class="mt-6 bg-white p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4">Agregar canción</h3>
-                <form action="<?= base_url('my-playlists/' . $playlist['id']) ?>" method="post"
+                <form action="<?= base_url('my-playlists/' . $playlist['id']) . '/tracks' ?>" method="post"
                     class="flex items-center space-x-4">
                     <?= csrf_field() ?>
                     <input type="number" name="track_id" placeholder="ID de la canción" required

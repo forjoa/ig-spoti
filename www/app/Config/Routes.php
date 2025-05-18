@@ -42,16 +42,17 @@ $routes->get('/album/(:num)', [Album::class, 'show']);
 $routes->get('/playlist/(:num)', [Playlist::class, 'show']);
 
 // Mis Playlists
-$routes->get('/my-playlists', [MyPlaylists::class, 'index']);
-$routes->get('/my-playlists/(:num)', [MyPlaylists::class, 'show']);
-
 $routes->get('/create-playlist', [MyPlaylists::class, 'createView']);
 $routes->post('/create-playlist', [MyPlaylists::class, 'create']);
 
+$routes->get('/my-playlists', [MyPlaylists::class, 'index']);
+$routes->get('/my-playlists/(:num)', [MyPlaylists::class, 'show']);
+
 $routes->put('/my-playlists/(:num)', [MyPlaylists::class, 'update']);
 $routes->post('/my-playlists/(:num)', [MyPlaylists::class, 'delete']);
-$routes->put('/my-playlists/(:num)/track/(:num)', [MyPlaylists::class, 'addTrack']);
-$routes->delete('/my-playlists/(:num)/track/(:num)', [MyPlaylists::class, 'removeTrack']);
+$routes->post('/my-playlists/(:num)/tracks', [MyPlaylists::class, 'addTrack']);
+
+$routes->delete('/my-playlists/(:num)/track', [MyPlaylists::class, 'removeTrack']);
 // });
 
 // Cierre de Sesión (accesible para todos)
